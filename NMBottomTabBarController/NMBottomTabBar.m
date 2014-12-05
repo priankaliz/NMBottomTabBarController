@@ -45,11 +45,12 @@
     }
     return self;
 }
--(void)layoutTabWihNumberOfButtons:(NSInteger)numberOfTabs andSeparatorImage : (NSString *)image{
+-(void)layoutTabWihNumberOfButtons:(NSInteger)tabsCount andSeparatorImage : (NSString *)image{
     
     UIImageView *previousSpacerImageView;
+    numberOFTabs = tabsCount;
     
-    for( int i = 0 ; i <numberOfTabs ; i++){
+    for( int i = 0 ; i <tabsCount ; i++){
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -72,11 +73,11 @@
             
             
         }
-        CGFloat multiplier = 1.00/numberOfTabs;
+        CGFloat multiplier = 1.00/tabsCount;
         
         [self addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-        if(i== numberOfTabs - 1){
+        if(i== tabsCount - 1){
             [self addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0]];
         }
         else{
@@ -85,10 +86,11 @@
             
         
 
-        if(i < numberOfTabs-1){
+        if(i < tabsCount-1){
             
-            UIImageView *spacerImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:image]];
+            UIImageView *spacerImageView = [[UIImageView alloc] init];
             [self addSubview:spacerImageView];
+            [spacerImageView setTag:10 + i+1];
             [spacerImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
             
@@ -149,6 +151,15 @@
    
     UIButton *button = (UIButton *)[self viewWithTag:index +1];
     [self tabSelected:button];
+}
+-(void)setSeparatorWithImage : (UIImage *)image{
+    
+    for(int i = 11 ; i < (numberOFTabs+10) ; i++){
+        
+        UIImageView *separatorView = (UIImageView *)[self viewWithTag:i];
+        [separatorView setImage:image];
+        
+    }
 }
 
 

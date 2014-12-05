@@ -19,6 +19,7 @@
     NSInteger numberOFTabs;
     NSMutableArray *tabButtons;
     NSInteger selectedIndex;
+
 }
 
 @property (assign, nonatomic) id <NMBottomTabBarDelegate> delegate;
@@ -26,5 +27,6 @@
 -(void)layoutTabWihNumberOfButtons:(NSInteger)numberOfTabs andSeparatorImage : (NSString *)image;
 -(void)configureTabAtIndex : (NSInteger)index withUnselectedBackgroundImage : (UIImage *)backImage selectedBackgroundImage : (UIImage *)selecetedBackImage iconImage : (UIImage *)iconImage andText : (NSString *)text andTextFont : (UIFont *)font andFontColour : (UIColor *)color;
 -(void)setTabSelectedWithIndex : (NSInteger)index;
+-(void)setSeparatorWithImage : (UIImage *)image;
 
 @end
