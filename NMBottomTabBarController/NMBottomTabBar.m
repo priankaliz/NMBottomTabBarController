@@ -8,11 +8,13 @@
 
 #import "NMBottomTabBar.h"
 
-#define ICON_SPACING 20.0
+#define ICON_SPACING 5.0
 #define WIDTH_CONSTANT -1.00
 
 
+
 @implementation NMBottomTabBar
+@synthesize separatorImage = _separatorImage;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -45,7 +47,7 @@
     }
     return self;
 }
--(void)layoutTabWihNumberOfButtons:(NSInteger)tabsCount andSeparatorImage : (NSString *)image{
+-(void)layoutTabWihNumberOfButtons:(NSInteger)tabsCount{
     
     UIImageView *previousSpacerImageView;
     numberOFTabs = tabsCount;
@@ -88,7 +90,8 @@
 
         if(i < tabsCount-1){
             
-            UIImageView *spacerImageView = [[UIImageView alloc] init];
+            UIImageView *spacerImageView = [[UIImageView alloc] initWithImage:self.separatorImage];
+            [spacerImageView setBackgroundColor:[UIColor whiteColor]];
             [self addSubview:spacerImageView];
             [spacerImageView setTag:10 + i+1];
             [spacerImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -120,7 +123,7 @@
     [super layoutSubviews];
   }
 
--(void)configureTabAtIndex : (NSInteger)index withUnselectedBackgroundImage : (UIImage *)backImage selectedBackgroundImage : (UIImage *)selecetedBackImage iconImage : (UIImage *)iconImage andText : (NSString *)text andTextFont:(UIFont *)font andFontColour:(UIColor *)color{
+-(void)configureTabAtIndex : (NSInteger)index andTitleOrientation : (NMTitleOrientation)titleOrientation withUnselectedBackgroundImage : (UIImage *)backImage selectedBackgroundImage : (UIImage *)selecetedBackImage iconImage : (UIImage *)iconImage andText : (NSString *)text andTextFont:(UIFont *)font andFontColour:(UIColor *)color{
     
     UIButton *button = (UIButton *)[self viewWithTag:index +1];
     [button setBackgroundImage:backImage forState:UIControlStateNormal];
@@ -130,8 +133,18 @@
     [button.titleLabel setFont:[UIFont systemFontOfSize:12.0]];
     [button.titleLabel setTextColor:color];
     CGFloat spacing = ICON_SPACING;
-    button.imageEdgeInsets = UIEdgeInsetsMake(0.0, -spacing/2.0, 0.0, 0.0);
-    button.titleEdgeInsets = UIEdgeInsetsMake(0.0, spacing/2.0, 0.0, 0.0);
+    
+    CGSize titleSize = [button.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: button.titleLabel.font}];
+    
+    if(titleOrientation == kTitleToRightOfIcon){
+        button.imageEdgeInsets = UIEdgeInsetsMake(0.0, -spacing/2.0, 0.0, 0.0);
+        button.titleEdgeInsets = UIEdgeInsetsMake(0.0, spacing/2.0, 0.0, 0.0);
+    }
+    else
+    {
+        button.titleEdgeInsets = UIEdgeInsetsMake(0.0, -button.imageView.frame.size.width, -(button.imageView.frame.size.height + spacing/2), 0.0);
+        button.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + spacing/2), 0.0, 0.0, -titleSize.width);
+    }
     
 }
 -(void)tabSelected : (id)sender{
@@ -152,13 +165,19 @@
     UIButton *button = (UIButton *)[self viewWithTag:index +1];
     [self tabSelected:button];
 }
--(void)setSeparatorWithImage : (UIImage *)image{
+
+-(void)setSeparatorImage:(UIImage *)separatorImage{
     
-    for(int i = 11 ; i < (numberOFTabs+10) ; i++){
+    _separatorImage = separatorImage;
+    if(numberOFTabs != 0){
         
-        UIImageView *separatorView = (UIImageView *)[self viewWithTag:i];
-        [separatorView setImage:image];
-        
+        for(int i = 11 ; i < (numberOFTabs+10) ; i++){
+            
+            UIImageView *separatorView = (UIImageView *)[self viewWithTag:i];
+            [separatorView setImage:self.separatorImage];
+            
+        }
+  
     }
 }
 

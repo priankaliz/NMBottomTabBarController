@@ -13,13 +13,14 @@
 @end
 
 @implementation NMBottomTabBarController
+@synthesize controllers = _controllers;
 
--(id)initWithCoder:(NSCoder *)aDecoder{
+-(id)init{
     
     self = [super init];
     if(self){
        
-
+        
     }
     return self;
 }
@@ -32,24 +33,29 @@
     
     containerView = [UIView new];
     [self.view addSubview:containerView];
-    [containerView setBackgroundColor:[UIColor redColor]];
-    [self setUpConstraintsForContainerView];
     
+    [self setUpConstraintsForContainerView];
     [self setUpConstraintsForTabBar];
     
     [self.tabBar setDelegate:self];
-    [self.tabBar setTabSelectedWithIndex:1];
-
-}
--(void)setViewControllersForTabs:(NSArray *)controllers {
     
-    self.controllers = controllers;
-    [self.tabBar layoutTabWihNumberOfButtons:self.controllers.count andSeparatorImage:@"separator.jpg"];
+
+  
+}
+
+-(void)setControllers:(NSArray *)controllers{
+    
+    _controllers = controllers;
+     [self.tabBar layoutTabWihNumberOfButtons:self.controllers.count];
 
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
+
+    
+  
 
     
     // Do any additional setup after loading the view, typically from a nib.
@@ -79,8 +85,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)selectTabAtIndex:(NSInteger)index{
+   
+   [self.tabBar setTabSelectedWithIndex:index];
+}
 -(void)didSelectTabAtIndex:(NSInteger)index{
- 
+
+    BOOL shouldSelect = YES;
+ if([self.delegate respondsToSelector:@selector(shouldSelectTabAtIndex:)]){
+     
+     shouldSelect = [self.delegate shouldSelectTabAtIndex:index];
+ }
+
+if(shouldSelect){
     if(selectedIndex == -1){
         
         UIViewController *destinationController = [self.controllers objectAtIndex:index];
@@ -91,7 +108,7 @@
         selectedIndex = index;
         
     }
-    if(selectedIndex != index){
+    else if(selectedIndex != index){
         
         UIViewController *sourceController = [self.controllers objectAtIndex:selectedIndex];
         UIViewController *destinationController = [self.controllers objectAtIndex:index];
@@ -107,9 +124,15 @@
            
             [self setUpContsraintsForDestinationCOntrollerView:destinationController.view];
             selectedIndex = index;
+            if([self.delegate respondsToSelector:@selector(didSelectTabAtIndex:)]){
+                
+                [self.delegate didSelectTabAtIndex:selectedIndex];
+            
+            }
         }];
         
     }
+}
    
 }
 -(void)setUpContsraintsForDestinationCOntrollerView : (UIView *)view {

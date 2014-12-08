@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NMBottomTabBarController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NMBottomTabBarControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "NMBottomTabBar.h"
 
+@protocol NMBottomTabBarControllerDelegate <NSObject>
+
+-(BOOL)shouldSelectTabAtIndex : (NSInteger)index;
+-(void)didSelectTabAtIndex : (NSInteger)index;
+
+@end
+
 @interface NMBottomTabBarController : UIViewController <NMBottomTabBarDelegate>{
     
     NSInteger selectedIndex;
@@ -16,8 +23,8 @@
 }
 @property (strong, nonatomic) NSArray *controllers;
 @property (strong, nonatomic) NMBottomTabBar *tabBar;
--(void)setViewControllersForTabs:(NSArray *)controllers;
-
+@property (assign, nonatomic) id <NMBottomTabBarControllerDelegate> delegate;
+-(void)selectTabAtIndex : (NSInteger)index;
 
 
 @end

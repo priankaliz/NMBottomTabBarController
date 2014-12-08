@@ -29,13 +29,15 @@
     fourController.view.backgroundColor = [UIColor purpleColor];
     NMBottomTabBarController *tabBarController = (NMBottomTabBarController *)self.window.rootViewController;
     
-    [tabBarController setViewControllersForTabs:[NSArray arrayWithObjects:oneController,twoController,threeController,fourController, nil]];
     
-    [tabBarController.tabBar setSeparatorWithImage:[UIImage imageNamed:@"separator.jpg"]];
-    [tabBarController.tabBar configureTabAtIndex:0 withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"home"]  andText:@"Home"andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
-    [tabBarController.tabBar configureTabAtIndex:1 withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"profile"]  andText:@"Profile" andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
-    [tabBarController.tabBar configureTabAtIndex:2 withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"settings"]  andText:@"Settings" andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
-    [tabBarController.tabBar configureTabAtIndex:3 withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"calendar"]  andText:@"Calendar" andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
+    tabBarController.tabBar.separatorImage = [UIImage imageNamed:@"separator.jpg"];
+
+    tabBarController.controllers = [NSArray arrayWithObjects:oneController,twoController,threeController,fourController, nil];
+    tabBarController.delegate = self;
+    [tabBarController.tabBar configureTabAtIndex:0 andTitleOrientation : kTitleToRightOfIcon  withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"home"]  andText:@"Home"andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
+    [tabBarController.tabBar configureTabAtIndex:1 andTitleOrientation : kTitleToRightOfIcon withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"profile"]  andText:@"Profile" andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
+    [tabBarController.tabBar configureTabAtIndex:2 andTitleOrientation : kTitleToRightOfIcon withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"settings"]  andText:@"Settings" andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
+    [tabBarController.tabBar configureTabAtIndex:3 andTitleOrientation : kTItleToBottomOfIcon withUnselectedBackgroundImage:[UIImage imageNamed:@"unselected.jpeg"] selectedBackgroundImage:[UIImage imageNamed:@"selected.jpeg"] iconImage:[UIImage imageNamed:@"calendar"]  andText:@"Calendar" andTextFont:[UIFont systemFontOfSize:12.0] andFontColour:[UIColor whiteColor]];
     [tabBarController.tabBar setTabSelectedWithIndex:0];
 
     return YES;
@@ -62,5 +64,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+//-(void)didSelectTabAtIndex:(NSInteger)index{
+//    
+//    if(index == )
+//}
 
 @end

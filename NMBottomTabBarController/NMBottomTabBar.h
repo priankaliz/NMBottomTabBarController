@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum titleOrientation {
+    
+    kTitleToRightOfIcon = 0,
+    kTItleToBottomOfIcon
+    
+} NMTitleOrientation;
+
+
+
 @protocol NMBottomTabBarDelegate <NSObject>
 
 -(void)didSelectTabAtIndex : (NSInteger)index;
@@ -19,14 +28,16 @@
     NSInteger numberOFTabs;
     NSMutableArray *tabButtons;
     NSInteger selectedIndex;
+   }
 
-}
 
 @property (assign, nonatomic) id <NMBottomTabBarDelegate> delegate;
+@property (strong, nonatomic) UIImage *separatorImage;
 
--(void)layoutTabWihNumberOfButtons:(NSInteger)numberOfTabs andSeparatorImage : (NSString *)image;
--(void)configureTabAtIndex : (NSInteger)index withUnselectedBackgroundImage : (UIImage *)backImage selectedBackgroundImage : (UIImage *)selecetedBackImage iconImage : (UIImage *)iconImage andText : (NSString *)text andTextFont : (UIFont *)font andFontColour : (UIColor *)color;
+-(void)layoutTabWihNumberOfButtons:(NSInteger)numberOfTabs ;
+-(void)configureTabAtIndex : (NSInteger)index andTitleOrientation : (NMTitleOrientation)titleOrientation withUnselectedBackgroundImage : (UIImage *)backImage selectedBackgroundImage : (UIImage *)selecetedBackImage iconImage : (UIImage *)iconImage andText : (NSString *)text andTextFont:(UIFont *)font andFontColour:(UIColor *)color;
 -(void)setTabSelectedWithIndex : (NSInteger)index;
--(void)setSeparatorWithImage : (UIImage *)image;
+
+
 
 @end
