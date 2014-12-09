@@ -1,12 +1,12 @@
 NMBottomTabBarController
 ========================
 
-A custom tab bar controller for iOS written in Objective C. It uses auto layout.
+A customisable tab bar controller for iOS written in Objective C. It uses auto layout.
 
 Requirements
 ========================
-iOS 7.1 + 
-ARC
+1. iOS 7.1 + 
+2. ARC
 ##### Image Requirements for configuring the tab bar items
 1. Icon image
 2. Selected and unselected background image 
@@ -95,7 +95,7 @@ License
 ========================
 The project is licensed under the MIT license. For more information please see the [LICENSE][https://github.com/priankaliz/NMBottomTabBarController/blob/master/LICENSE] file
 
-License
+Credits
 ========================
 NMBottomTabBarController was developed for a project I work on. 
 Please feel free to reach me at priankaliz@gmail.com
