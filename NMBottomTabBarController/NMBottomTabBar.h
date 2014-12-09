@@ -20,6 +20,7 @@ typedef enum titleOrientation {
 @protocol NMBottomTabBarDelegate <NSObject>
 
 -(void)didSelectTabAtIndex : (NSInteger)index;
+-(BOOL)shouldSelectTabAtIndex : (NSInteger)index;
 
 @end
 

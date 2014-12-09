@@ -151,13 +151,19 @@
     
     UIButton *button = (UIButton *)sender;
     
+    BOOL shouldSelect = YES;
+    
+   
     if(selectedIndex != (button.tag -1)){
-        
-        [button setSelected:!button.selected];
-        UIButton *previousTabButton = (UIButton *)[self viewWithTag:selectedIndex + 1];
-        [previousTabButton setSelected:!button.selected];
-        selectedIndex = button.tag - 1;
-        [self.delegate didSelectTabAtIndex:button.tag -1];
+        if([self.delegate respondsToSelector:@selector(shouldSelectTabAtIndex:)])
+            shouldSelect = [self.delegate shouldSelectTabAtIndex:button.tag -1];
+        if(shouldSelect){
+            [button setSelected:!button.selected];
+            UIButton *previousTabButton = (UIButton *)[self viewWithTag:selectedIndex + 1];
+            [previousTabButton setSelected:!button.selected];
+            selectedIndex = button.tag - 1;
+            [self.delegate didSelectTabAtIndex:button.tag -1];
+        }
     }
 }
 -(void)setTabSelectedWithIndex:(NSInteger)index{

@@ -91,14 +91,7 @@
 }
 -(void)didSelectTabAtIndex:(NSInteger)index{
 
-    BOOL shouldSelect = YES;
- if([self.delegate respondsToSelector:@selector(shouldSelectTabAtIndex:)]){
-     
-     shouldSelect = [self.delegate shouldSelectTabAtIndex:index];
- }
-
-if(shouldSelect){
-    if(selectedIndex == -1){
+     if(selectedIndex == -1){
         
         UIViewController *destinationController = [self.controllers objectAtIndex:index];
         [self addChildViewController:destinationController];
@@ -132,8 +125,17 @@ if(shouldSelect){
         }];
         
     }
-}
+
    
+}
+-(BOOL)shouldSelectTabAtIndex:(NSInteger)index{
+    
+    if([self.delegate respondsToSelector:@selector(shouldSelectTabAtIndex:)]){
+    
+    return [self.delegate shouldSelectTabAtIndex:index];
+    }
+    return YES;
+    
 }
 -(void)setUpContsraintsForDestinationCOntrollerView : (UIView *)view {
     
@@ -143,5 +145,6 @@ if(shouldSelect){
     [containerView setNeedsLayout];
 
 }
+
 
 @end
