@@ -7,6 +7,7 @@ Requirements
 ========================
 1. iOS 7.1 + 
 2. ARC
+
 ##### Image Requirements for configuring the tab bar items
 1. Icon image
 2. Selected and unselected background image 
